@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import learn.deepak.jersey.model.Activity;
+import learn.deepak.jersey.model.User;
 
 public class ActivityRepositoryStub implements ActivityRepository {
 
@@ -14,10 +15,12 @@ public class ActivityRepositoryStub implements ActivityRepository {
 
     public ActivityRepositoryStub() {
 
-        Activity a1 = new Activity(1, "Swimming", 55);
+        User u1 = new User(201, "Matt");
+        Activity a1 = new Activity(1, "Swimming", 55, u1);
         mActivityRepository.put(1, a1);
 
-        Activity a2 = new Activity(2, "Cycling", 120);
+        User u2 = new User(202, "Chan");
+        Activity a2 = new Activity(2, "Cycling", 120, u2);
         mActivityRepository.put(2, a2);
 
     }
@@ -44,6 +47,19 @@ public class ActivityRepositoryStub implements ActivityRepository {
     @Override
     public Activity findActivity(int aId) {
 
-        return mActivityRepository.get(aId);
+        Activity a = mActivityRepository.get(aId);
+        return a;
+    }
+
+    @Override
+    public User findUser(int aActivityId) {
+
+        User u = null;
+        Activity a = mActivityRepository.get(aActivityId);
+        if (a != null) {
+
+            u = a.getUser();
+        }
+        return u;
     }
 }

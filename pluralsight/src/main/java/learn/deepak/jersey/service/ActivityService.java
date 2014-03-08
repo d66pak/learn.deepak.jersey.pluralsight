@@ -9,6 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import learn.deepak.jersey.model.Activity;
+import learn.deepak.jersey.model.User;
 import learn.deepak.jersey.repository.ActivityRepository;
 import learn.deepak.jersey.repository.ActivityRepositoryStub;
 
@@ -31,7 +32,17 @@ public class ActivityService {
     // 127.0.0.1:8080/pluralsight/webapi/activities/1
     public Activity getActivity(@PathParam("activityId") int aId) {
 
+        System.out.println("getActivity called with id : " + aId);
         return mActivityRepo.findActivity(aId);
 
+    }
+
+    @GET
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    @Path("{activityId}/user")
+    // 127.0.0.1:8080/pluralsight/webapi/activities/1/user
+    public User getUser(@PathParam("activityId") int aId) {
+
+        return mActivityRepo.findUser(aId);
     }
 }
