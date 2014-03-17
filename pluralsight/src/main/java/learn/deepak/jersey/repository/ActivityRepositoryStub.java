@@ -1,27 +1,27 @@
 package learn.deepak.jersey.repository;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import learn.deepak.jersey.model.Activity;
 import learn.deepak.jersey.model.User;
 
 public class ActivityRepositoryStub implements ActivityRepository {
 
-    private final Map<Integer, Activity> mActivityRepository = new HashMap<Integer, Activity>(
-                                                                     5);
+    private final ConcurrentMap<Integer, Activity> mActivityRepository = new ConcurrentHashMap<Integer, Activity>(
+                                                                               10);
 
     public ActivityRepositoryStub() {
 
-        User u1 = new User(201, "Matt");
-        Activity a1 = new Activity(1, "Swimming", 55, u1);
-        mActivityRepository.put(1, a1);
+        User u1 = new User("Matt");
+        Activity a1 = new Activity("Swimming", 55, u1);
+        mActivityRepository.put(a1.getId(), a1);
 
-        User u2 = new User(202, "Chan");
-        Activity a2 = new Activity(2, "Cycling", 120, u2);
-        mActivityRepository.put(2, a2);
+        User u2 = new User("Chan");
+        Activity a2 = new Activity("Cycling", 120, u2);
+        mActivityRepository.put(a2.getId(), a2);
 
     }
 
@@ -61,5 +61,11 @@ public class ActivityRepositoryStub implements ActivityRepository {
             u = a.getUser();
         }
         return u;
+    }
+
+    @Override
+    public void addActivity(Activity aActivity) {
+
+//        mActivityRepository.putIfAbsent(aActivity.getId(), aActivity);
     }
 }

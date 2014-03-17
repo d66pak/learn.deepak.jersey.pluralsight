@@ -15,11 +15,11 @@ public class Activity {
         // no-arg ctor required by JAXB for marshalling/unmarshalling
     }
 
-    public Activity(int aId, String aDesc, int aDurInMins, User aUser) {
+    public Activity(String aDesc, int aDurInMins, User aUser) {
 
         mDescription = aDesc;
         mDuration = aDurInMins;
-        mId = aId;
+        mId = generateActivityId();
         mUser = aUser;
     }
 
@@ -27,8 +27,8 @@ public class Activity {
         return mId;
     }
 
-    public void setId(int mId) {
-        this.mId = mId;
+    public void setId(int aId) {
+        mId = aId;
     }
 
     @XmlElement(name = "desc")
@@ -56,6 +56,11 @@ public class Activity {
 
     public void setUser(User mUser) {
         this.mUser = mUser;
+    }
+
+    public static int generateActivityId() {
+
+        return (int)(System.nanoTime() % 1000000);
     }
 
 }

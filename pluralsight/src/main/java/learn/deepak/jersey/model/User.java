@@ -13,20 +13,17 @@ public class User {
         // no-arg ctor required by JAXB for marshalling/unmarshalling
     }
 
-    public User(int aId, String aName) {
+    public User(String aName) {
 
-        mUserId = aId;
+        mUserId = generateUserId();
         mUserName = aName;
     }
 
-    @XmlElement(name = "userId")
     public int getUserId() {
         return mUserId;
     }
 
-    public void setUserId(int mUserId) {
-        this.mUserId = mUserId;
-    }
+    // No setter for Id, so that response does not show the user id
 
     @XmlElement(name = "name")
     public String getUserName() {
@@ -35,6 +32,11 @@ public class User {
 
     public void setUserName(String mUserName) {
         this.mUserName = mUserName;
+    }
+
+    public static int generateUserId() {
+
+        return (int) (System.nanoTime() % 1000000);
     }
 
 }

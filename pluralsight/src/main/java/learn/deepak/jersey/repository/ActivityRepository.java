@@ -13,4 +13,6 @@ public interface ActivityRepository {
 
     public abstract User findUser(int aActivityId);
 
+    public abstract void addActivity(Activity aActivity);
+
 }
