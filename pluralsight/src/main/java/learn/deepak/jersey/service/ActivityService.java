@@ -2,11 +2,14 @@ package learn.deepak.jersey.service;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.MultivaluedMap;
 
 import learn.deepak.jersey.model.Activity;
 import learn.deepak.jersey.model.User;
@@ -57,5 +60,25 @@ public class ActivityService {
     public User getUser(@PathParam("activityId") int aId) {
 
         return mActivityRepo.findUser(aId);
+    }
+
+    @POST
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    @Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
+    @Path("activity")
+    // 127.0.0.1:8080/pluralsight/webapi/activities/activity
+    public Activity addActivity(MultivaluedMap<String, String> aFormParams) {
+
+        String desc = aFormParams.getFirst("desc");
+        String dur = aFormParams.getFirst("dur");
+        String user = aFormParams.getFirst("user");
+        System.out.println("Description : " + desc + " Duration : " + dur
+                + " User : " + user);
+
+        // TODO: Hard user id
+        User u = new User(103, ((user == null) ? "default" : user));
+        Activity a = new Activity(3, desc, Integer.parseInt(dur), u);
+        mActivityRepo.addActivity(a);
+        return a;
     }
 }

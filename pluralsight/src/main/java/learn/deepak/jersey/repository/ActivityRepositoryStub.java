@@ -15,12 +15,16 @@ public class ActivityRepositoryStub implements ActivityRepository {
 
     public ActivityRepositoryStub() {
 
-        User u1 = new User("Matt");
-        Activity a1 = new Activity("Swimming", 55, u1);
+        // TODO: Hard user id
+        User u1 = new User(100, "Matt");
+        // TODO: Hard coded id
+        Activity a1 = new Activity(1, "Swimming", 55, u1);
         mActivityRepository.put(a1.getId(), a1);
 
-        User u2 = new User("Chan");
-        Activity a2 = new Activity("Cycling", 120, u2);
+        // TODO: Hard user id
+        User u2 = new User(101, "Chan");
+        // TODO: Hard coded id
+        Activity a2 = new Activity(2, "Cycling", 120, u2);
         mActivityRepository.put(a2.getId(), a2);
 
     }
@@ -66,6 +70,6 @@ public class ActivityRepositoryStub implements ActivityRepository {
     @Override
     public void addActivity(Activity aActivity) {
 
-//        mActivityRepository.putIfAbsent(aActivity.getId(), aActivity);
+        mActivityRepository.putIfAbsent(aActivity.getId(), aActivity);
     }
 }

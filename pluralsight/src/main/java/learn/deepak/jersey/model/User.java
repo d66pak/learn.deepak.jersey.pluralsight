@@ -13,9 +13,9 @@ public class User {
         // no-arg ctor required by JAXB for marshalling/unmarshalling
     }
 
-    public User(String aName) {
+    public User(int aId, String aName) {
 
-        mUserId = generateUserId();
+        mUserId = aId;
         mUserName = aName;
     }
 

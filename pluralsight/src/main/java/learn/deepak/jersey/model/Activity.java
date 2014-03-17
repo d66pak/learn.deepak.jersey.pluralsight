@@ -15,11 +15,11 @@ public class Activity {
         // no-arg ctor required by JAXB for marshalling/unmarshalling
     }
 
-    public Activity(String aDesc, int aDurInMins, User aUser) {
+    public Activity(int aId, String aDesc, int aDurInMins, User aUser) {
 
         mDescription = aDesc;
         mDuration = aDurInMins;
-        mId = generateActivityId();
+        mId = aId;
         mUser = aUser;
     }
 
