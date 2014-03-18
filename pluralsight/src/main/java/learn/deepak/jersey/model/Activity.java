@@ -60,7 +60,14 @@ public class Activity {
 
     public static int generateActivityId() {
 
-        return (int)(System.nanoTime() % 1000000);
+        return (int) (System.nanoTime() % 1000000);
+    }
+
+    @Override
+    public String toString() {
+
+        return "ActivityId : " + mId + " Description : " + mDescription
+                + " Duration : " + mDuration + " " + mUser.toString();
     }
 
 }

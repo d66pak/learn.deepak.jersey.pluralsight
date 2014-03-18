@@ -39,4 +39,10 @@ public class User {
         return (int) (System.nanoTime() % 1000000);
     }
 
+    @Override
+    public String toString() {
+
+        return "UserId : " + mUserId + " Name : " + mUserName;
+    }
+
 }
