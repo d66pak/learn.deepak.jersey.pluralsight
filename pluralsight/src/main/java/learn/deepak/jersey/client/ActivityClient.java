@@ -3,9 +3,12 @@
  */
 package learn.deepak.jersey.client;
 
+import java.util.List;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -24,7 +27,7 @@ public class ActivityClient {
         mClient = ClientBuilder.newClient();
     }
 
-    public Activity getActivity(String aId) {
+    public Activity get(String aId) {
 
         WebTarget target = mClient
                 .target("http://127.0.0.1:8080/pluralsight/webapi/");
@@ -33,7 +36,17 @@ public class ActivityClient {
         return a;
     }
 
-    public String getActivityXML(String aId) {
+    public List<Activity> get() {
+
+        List<Activity> activities = mClient
+                .target("http://127.0.0.1:8080/pluralsight/webapi/activities")
+                .request().get(new GenericType<List<Activity>>() {
+                });
+
+        return activities;
+    }
+
+    public String getXML(String aId) {
 
         WebTarget target = mClient
                 .target("http://127.0.0.1:8080/pluralsight/webapi/");
@@ -42,13 +55,28 @@ public class ActivityClient {
         return xmlResp;
     }
 
-    public String getActivityJson(String aId) {
+    public String getXML() {
+
+        return mClient
+                .target("http://127.0.0.1:8080/pluralsight/webapi/activities")
+                .request().get(String.class);
+    }
+
+    public String getJson(String aId) {
 
         WebTarget target = mClient
                 .target("http://127.0.0.1:8080/pluralsight/webapi/");
         Response resp = target.path("activities/").path(aId)
                 .request(MediaType.APPLICATION_JSON_TYPE).get();
         System.out.println("getActivityJson status : " + resp);
+        return resp.readEntity(String.class);
+    }
+
+    public String getJson() {
+
+        Response resp = mClient
+                .target("http://127.0.0.1:8080/pluralsight/webapi/activities")
+                .request(MediaType.APPLICATION_JSON_TYPE).get();
         return resp.readEntity(String.class);
     }
 }
