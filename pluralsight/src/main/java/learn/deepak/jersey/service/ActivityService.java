@@ -8,8 +8,11 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import learn.deepak.jersey.model.Activity;
 import learn.deepak.jersey.model.User;
@@ -57,9 +60,22 @@ public class ActivityService {
     @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     @Path("{activityId}/user")
     // 127.0.0.1:8080/pluralsight/webapi/activities/1/user
-    public User getUser(@PathParam("activityId") int aId) {
+    public Response getUser(@PathParam("activityId") int aId) {
 
-        return mActivityRepo.findUser(aId);
+        if (aId < 0) {
+
+            return Response.status(Status.BAD_REQUEST)
+                    .entity("Activity Id cannot be less that zero!").build();
+        }
+
+        User u = mActivityRepo.findUser(aId);
+        if (u == null) {
+
+            throw new WebApplicationException(Response.status(Status.NOT_FOUND)
+                    .entity("No user found in activity id : " + aId).build());
+        }
+
+        return Response.ok(u).build();
     }
 
     @POST
@@ -92,7 +108,7 @@ public class ActivityService {
         System.out.println(activity.toString());
 
         // Create activity with proper ids
-        // TODO : 
+        // TODO :
         User u = new User(104, activity.getUser().getUserName());
         Activity a = new Activity(4, activity.getDescription(),
                 activity.getDuration(), u);
