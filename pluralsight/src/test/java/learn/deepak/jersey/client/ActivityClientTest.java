@@ -2,7 +2,11 @@ package learn.deepak.jersey.client;
 
 import java.util.List;
 
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
+
 import learn.deepak.jersey.model.Activity;
+import learn.deepak.jersey.model.User;
 
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -49,5 +53,15 @@ public class ActivityClientTest {
         String xmlResp = mAC.getXML("1");
         System.out.println("xml response :\n" + xmlResp);
         Assert.assertNotNull(xmlResp);
+    }
+
+    @Test
+    public void createActivity() {
+
+        User u = new User(0, "Roger");
+        Activity a = new Activity(0, "Dancing", 60, u);
+        Response r = mAC.create(a);
+        System.out.println("create test : \n" + r.readEntity(String.class));
+        Assert.assertEquals(r.getStatus(), 200);
     }
 }

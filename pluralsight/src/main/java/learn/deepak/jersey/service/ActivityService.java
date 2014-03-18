@@ -103,17 +103,17 @@ public class ActivityService {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Path("activity")
     // 127.0.0.1:8080/pluralsight/webapi/activities/activity
-    public Activity addActivityBinding(Activity activity) {
+    public Response addActivityBinding(Activity activity) {
 
         System.out.println(activity.toString());
 
         // Create activity with proper ids
-        // TODO :
+        // TODO : Hardcoded ids
         User u = new User(104, activity.getUser().getUserName());
         Activity a = new Activity(4, activity.getDescription(),
                 activity.getDuration(), u);
         mActivityRepo.addActivity(a);
-        return a;
+        return Response.ok(a).build();
     }
 
 }

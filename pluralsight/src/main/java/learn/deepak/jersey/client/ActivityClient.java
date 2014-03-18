@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
@@ -78,5 +79,13 @@ public class ActivityClient {
                 .target("http://127.0.0.1:8080/pluralsight/webapi/activities")
                 .request(MediaType.APPLICATION_JSON_TYPE).get();
         return resp.readEntity(String.class);
+    }
+
+    public Response create(Activity a) {
+
+        return mClient
+                .target("http://127.0.0.1:8080/pluralsight/webapi/activities/activity")
+                .request()
+                .post(Entity.entity(a, MediaType.APPLICATION_JSON_TYPE));
     }
 }
